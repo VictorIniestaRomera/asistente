@@ -5,11 +5,11 @@ from google import genai;
 
 def main():
     try:
-        client = genai.Client(api_key = os.environ["GEMINI_API_KEY"]); #Create API key in Google AI Studio.
+        #client = genai.Client(api_key = os.environ["GEMINI_API_KEY"]); #Create API key in Google AI Studio.
         root = Tk();
         
         root.title("Welcome to Tkinted!");
-        root.geometry("500x500");
+        root.geometry("500x300");
         
         lbl = Label(root, text = "Input prompt");
         lbl.grid();
@@ -18,7 +18,11 @@ def main():
         chat.grid(sticky = "nsew", padx = 3, pady = 1);
 
         def insertMessage(sender: str, message: str) -> None:
-            chat.config(state="normal");
+            if sender == "you":
+                chat.config(state="normal", fg = "black");
+            elif sender == "gemini":
+                chat.config(state="normal", fg = "gray");
+            
             chat.insert("end", f"{sender}: {message}\n");
             chat.config(state="disabled");
             chat.see("end");
@@ -28,16 +32,22 @@ def main():
         
         def sendClicked() -> None:
             prompt = promptEntry.get();
-            promptEntry.delete(0, END);
+            if prompt is not None and prompt != "":
+                promptEntry.delete(0, END);
 
-            insertMessage("you", prompt);
+                insertMessage("you", prompt);
 
-            response = client.models.generate_content(model = "gemini-2.5-flash", contents = prompt);
+                #response = client.models.generate_content(model = "gemini-2.5-flash", contents = prompt);
 
-            insertMessage("gemini", response.text);
+                #insertMessage("gemini", response.text);
         
-        sendButton = Button(root, text = "Send", fg = "red", command = sendClicked);
+        sendButton = Button(root, text = "Send", command = sendClicked);
         sendButton.grid(row = 2, column = 1);
+
+        def sendPressed(event):
+            sendClicked();
+
+        root.bind("<Return>", sendPressed);
         
         root.mainloop();
     except Exception as e:
