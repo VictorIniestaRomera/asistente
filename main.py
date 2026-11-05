@@ -8,7 +8,7 @@ def main():
         #client = genai.Client(api_key = os.environ["GEMINI_API_KEY"]); #Create API key in Google AI Studio.
         root = Tk();
         
-        root.title("Welcome to Tkinted!");
+        root.title("Welcome to Gemini!");
         root.geometry("500x300");
         
         lbl = Label(root, text = "Input prompt");
@@ -44,7 +44,7 @@ def main():
         sendButton = Button(root, text = "Send", command = sendClicked);
         sendButton.grid(row = 2, column = 1);
 
-        def sendPressed(event):
+        def sendPressed(event) -> None:
             sendClicked();
 
         root.bind("<Return>", sendPressed);
