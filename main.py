@@ -28,7 +28,7 @@ def main():
 
         chat.tag_config("user", foreground = "#3498db");
         chat.tag_config("user_name", foreground = "#5c5c5c");
-        chat.tag_config("gemini", foreground="#2ecc71");
+        chat.tag_config("gemini", foreground="#2fc96f");
         chat.tag_config("gemini_name", foreground="#5c5c5c");
 
         def insertMessage(sender: str, message: str) -> None:
@@ -41,8 +41,8 @@ def main():
 
             chat.config(state = "normal");
 
-            chat.insert("end", f"{sender}: ", f"{tag}_name");
-            chat.insert("end", f"{message}\n", tag);
+            chat.insert("end", f"{sender}: ", tag);
+            chat.insert("end", f"{message}\n", f"{tag}_name");
 
             chat.config(state = "disabled");
             chat.see("end");
