@@ -1,11 +1,7 @@
 from tkinter import *;
 
-import os;
-from google import genai;
-
-from dotenv import load_dotenv;
-
 import jsonManager;
+import geminiManager;
 
 def main():
     try:
@@ -13,12 +9,6 @@ def main():
             raise Exception("File not found.");
     
         jsonManager.clear();
-
-        load_dotenv();
-
-        GEMINI_KEY = os.getenv("GEMINI_KEY");
-
-        client = genai.Client(api_key = GEMINI_KEY); #Create API key in Google AI Studio.
 
         root = Tk();
         
@@ -54,21 +44,6 @@ def main():
         
         promptEntry = Entry(root, width = 75);
         promptEntry.grid();
-
-        def requestGemini(prompt: str) -> str:
-            try:
-                response = client.models.generate_content(model="gemini-3.5-flash-lite", contents=prompt);
-
-                jsonManager.add("gemini", response.text);
-
-                return response.text;
-            except Exception as e:
-                print("Gemini API error:", e)
-
-                if getattr(e, "code", None) == 503:
-                    return "Gemini is temporarily unavailable. Please try again later."
-
-            return f"An error occurred: {e}"
         
         def sendClicked() -> None:
             prompt = promptEntry.get();
@@ -84,7 +59,7 @@ def main():
                 insertMessage("gemini", "Thinking...");
                 root.update_idletasks();
 
-                answer = requestGemini(prompt);
+                answer = geminiManager.requestGemini(prompt);
 
                 chat.config(state = "normal");
                 chat.delete("end-2l", "end-1l");

@@ -1,10 +1,10 @@
 [
     {
         "role": "you",
-        "content": "Hello"
+        "content": "hola"
     },
     {
         "role": "gemini",
-        "content": "Hello! How can I help you today?"
+        "content": "¡Hola! ¿En qué puedo ayudarte hoy?"
     }
 ]
