@@ -50,7 +50,7 @@ def main():
 
         def requestGemini(prompt: str) -> str:
             try:
-                response = client.models.generate_content(model="gemini-3.7-flash", contents=prompt)
+                response = client.models.generate_content(model="gemini-3.5-flash-lite", contents=prompt)
 
                 return response.text
             except Exception as e:
