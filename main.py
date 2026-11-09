@@ -5,8 +5,15 @@ from google import genai;
 
 from dotenv import load_dotenv;
 
+import jsonManager;
+
 def main():
     try:
+        if not jsonManager.exists():
+            raise Exception("File not found.");
+    
+        jsonManager.clear();
+
         load_dotenv();
 
         GEMINI_KEY = os.getenv("GEMINI_KEY");
@@ -50,9 +57,11 @@ def main():
 
         def requestGemini(prompt: str) -> str:
             try:
-                response = client.models.generate_content(model="gemini-3.5-flash-lite", contents=prompt)
+                response = client.models.generate_content(model="gemini-3.5-flash-lite", contents=prompt);
 
-                return response.text
+                jsonManager.add("gemini", response.text);
+
+                return response.text;
             except Exception as e:
                 print("Gemini API error:", e)
 
@@ -69,6 +78,7 @@ def main():
 
                 #User message
                 insertMessage("you", prompt);
+                jsonManager.add("you", prompt);
 
                 #Temporary message
                 insertMessage("gemini", "Thinking...");
