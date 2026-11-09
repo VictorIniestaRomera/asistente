@@ -1,0 +1,5 @@
+El asistente es uno general, por lo que se puede preguntar por lo que se desee.
+La interfaz está diseñada en tkinter y le he creado pequeña, por fallo en diseño.
+
+Cada cuanto se escriba el historial será borrado en 'chat.json' para poder guardarlo si se desease.
+IMPORTANTE pues cada nuevo reinicio de sesión el historial será reiniciado y todo contenido existente borrado.
